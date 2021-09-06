@@ -29,7 +29,9 @@ namespace AShop
             services.AddDbContext<AshopDB>(options =>
             options.UseSqlServer(
                Configuration.GetConnectionString("DefaultConnection")));
-            services.AddDefaultIdentity<IdentityUser>().AddEntityFrameworkStores<AshopDB>();
+            services.AddIdentity<IdentityUser, IdentityRole>()
+                .AddDefaultTokenProviders().AddDefaultUI()
+                .AddEntityFrameworkStores<AshopDB>();
             services.AddHttpContextAccessor();
             services.AddSession(Options =>
             {
