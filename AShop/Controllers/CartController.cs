@@ -81,7 +81,8 @@ namespace AShop.Controllers
             IEnumerable<Product> productList = _context.Product.Where(u => prodInCart.Contains(u.Id));
             ProductUserViewModel = new ProductUserViewModel()
             {
-                ApplicationUser = _context.ApplicationUser.FirstOrDefault(u => u.Id == claim.Value)
+                ApplicationUser = _context.ApplicationUser.FirstOrDefault(u => u.Id == claim.Value),
+                ProductList = productList
             };
 
             return View(ProductUserViewModel);
