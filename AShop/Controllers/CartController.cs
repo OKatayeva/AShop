@@ -1,13 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Security.Claims;
+using System.Text;
 using System.Threading.Tasks;
 using AShop.Data;
 using AShop.Models;
 using AShop.Models.ViewModels;
 using AShop.Utility;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -18,13 +22,17 @@ namespace AShop.Controllers
     public class CartController : Controller
     {
         private readonly AshopDB _context;
+        private readonly IWebHostEnvironment _webHostEnvironment;
+        private readonly IEmailSender _emailSender;
 
         [BindProperty]
         public ProductUserViewModel ProductUserViewModel { get; set; }
 
-        public CartController(AshopDB context)
+        public CartController(AshopDB context, IWebHostEnvironment webHostEnvironment, IEmailSender emailSender)
         {
             _context = context;
+            _webHostEnvironment = webHostEnvironment;
+            _emailSender = emailSender;
         }
         public IActionResult Index()
         {
@@ -82,10 +90,49 @@ namespace AShop.Controllers
             ProductUserViewModel = new ProductUserViewModel()
             {
                 ApplicationUser = _context.ApplicationUser.FirstOrDefault(u => u.Id == claim.Value),
-                ProductList = productList
+                ProductList = productList.ToList()
             };
 
             return View(ProductUserViewModel);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [ActionName("Summary")]
+        public async Task <IActionResult> SummaryPost(ProductUserViewModel productUserViewModel)
+        {
+
+            var pathToTemplate = _webHostEnvironment.WebRootPath + Path.DirectorySeparatorChar.ToString()
+                + "templates" + Path.DirectorySeparatorChar.ToString() +
+                "inquiry.html";
+            var subject = "New inquiry";
+            var htmlBody = "";
+            using (StreamReader stream = System.IO.File.OpenText(pathToTemplate))
+            {
+                htmlBody = stream.ReadToEnd();
+            }
+
+            StringBuilder productList = new StringBuilder();
+            foreach (var product in ProductUserViewModel.ProductList)
+            {
+                productList.Append($" - Name: {product.Name} <span style='font-size:14px;'>(ID: {product.Id})</span><br/>");
+            }
+
+            string messageBody = string.Format(htmlBody,
+                ProductUserViewModel.ApplicationUser.FullName,
+                ProductUserViewModel.ApplicationUser.Email,
+                ProductUserViewModel.ApplicationUser.PhoneNumber,
+                productList.ToString());
+            await _emailSender.SendEmailAsync(WC.EmailAdmin, subject, messageBody);
+            return RedirectToAction(nameof(InquiryConfirmation));
+        }
+
+       
+        public IActionResult InquiryConfirmation(ProductUserViewModel productUserViewModel)
+        {
+
+            HttpContext.Session.Clear();
+            return View();
         }
     }
 }

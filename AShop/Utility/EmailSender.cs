@@ -27,6 +27,7 @@ namespace AShop.Utility
         {
             _MailjetSettings = _configuration.GetSection("Mailjet").Get<MailjetSettings>();
 
+            
             MailjetClient client = new MailjetClient(_MailjetSettings.ApiKey, _MailjetSettings.SecretKey)
             {
                 Version = ApiVersion.V3_1,
