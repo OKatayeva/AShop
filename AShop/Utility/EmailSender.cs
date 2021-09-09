@@ -42,7 +42,7 @@ namespace AShop.Utility
        "From",
        new JObject {
         {"Email", "oksana89@gmail.com"},
-        {"Name", "Oksana"}
+        {"Name", "AShop"}
        }
       }, {
        "To",

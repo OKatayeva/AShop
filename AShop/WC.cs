@@ -9,12 +9,12 @@ namespace AShop
         //Windows OS
         //public const string ImagePath = @"\images\product\";
 
-        public static string SessionCart = "ShoppingCartSession";
+        public const string SessionCart = "ShoppingCartSession";
 
-        public static string AdminRole = "Admin";
+        public const string AdminRole = "Admin";
 
-        public static string CustomerRole = "Customer";
+        public const string CustomerRole = "Customer";
 
-        public static string EmailAdmin = "oksana89@gmail.com";
+        public const string EmailAdmin = "oksana89@gmail.com";
     }
 }

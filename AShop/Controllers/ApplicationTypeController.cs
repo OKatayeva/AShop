@@ -7,9 +7,11 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using AShop.Data;
 using AShop.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace AShop.Controllers
 {
+    [Authorize(Roles = WC.AdminRole)]
     public class ApplicationTypeController : Controller
     {
         private readonly AshopDB _context;
