@@ -27,7 +27,6 @@
     <None Remove="Microsoft.EntityFrameworkCore.Sqlite" />
     <None Remove="Views\Category %28copy%29\" />
     <None Remove="Views\Product\" />
-    <None Remove="Models\ViewModels\" />
     <None Remove="Microsoft.AspNetCore.Identity.EntityFrameworkCore" />
     <None Remove="Microsoft.AspNetCore.Identity.UI" />
     <None Remove="Views\Cart\" />
@@ -37,7 +36,6 @@
     <Folder Include="Data\" />
     <Folder Include="Views\ApplicationType\" />
     <Folder Include="Views\Product\" />
-    <Folder Include="Models\ViewModels\" />
     <Folder Include="wwwroot\images\" />
     <Folder Include="wwwroot\images\product\" />
     <Folder Include="Views\Cart\" />
@@ -54,6 +52,9 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\AShop_Utility\AShop_Utility.csproj">
+      <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
+    </ProjectReference>
+    <ProjectReference Include="..\AShop_Models\AShop_Models.csproj">
       <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
     </ProjectReference>
   </ItemGroup>

@@ -5,9 +5,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using AShop.Models;
+using AShop_Models;
 using AShop.Data;
-using AShop.Models.ViewModels;
+using AShop_Models.ViewModels;
 using Microsoft.EntityFrameworkCore;
 using AShop_Utility;
 

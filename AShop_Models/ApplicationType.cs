@@ -2,7 +2,7 @@
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
-namespace AShop.Models
+namespace AShop_Models
 {
     public class ApplicationType
     {

@@ -3,7 +3,7 @@ using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using Newtonsoft.Json.Serialization;
 
-namespace AShop.Models
+namespace AShop_Models
 {
     public class Category
     {

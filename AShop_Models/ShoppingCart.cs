@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Security.Cryptography.X509Certificates;
 
-namespace AShop.Models
+namespace AShop_Models
 {
     public class ShoppingCart
     {

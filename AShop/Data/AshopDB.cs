@@ -1,5 +1,5 @@
 ﻿using System;
-using AShop.Models;
+using AShop_Models;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 

@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.AspNetCore.Identity;
 
-namespace AShop.Models
+namespace AShop_Models
 {
     public class ApplicationUser: IdentityUser
     {   

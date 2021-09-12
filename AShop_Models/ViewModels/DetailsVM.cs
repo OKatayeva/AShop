@@ -1,5 +1,5 @@
 ﻿using System;
-namespace AShop.Models.ViewModels
+namespace AShop_Models.ViewModels
 {
     public class DetailsVM
     {

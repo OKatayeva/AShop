@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace AShop.Models
+namespace AShop_Models
 {
     public class ErrorViewModel
     {

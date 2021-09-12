@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace AShop.Models.ViewModels
+namespace AShop_Models.ViewModels
 {
     public class HomeVM
     {

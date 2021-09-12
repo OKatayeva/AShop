@@ -20,7 +20,7 @@ namespace AShop.Migrations
                 .HasAnnotation("ProductVersion", "5.0.9")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("AShop.Models.ApplicationType", b =>
+            modelBuilder.Entity("AShop_Models.ApplicationType", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -36,7 +36,7 @@ namespace AShop.Migrations
                     b.ToTable("ApplicationType");
                 });
 
-            modelBuilder.Entity("AShop.Models.Category", b =>
+            modelBuilder.Entity("AShop_Models.Category", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -55,7 +55,7 @@ namespace AShop.Migrations
                     b.ToTable("Category");
                 });
 
-            modelBuilder.Entity("AShop.Models.Product", b =>
+            modelBuilder.Entity("AShop_Models.Product", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -90,15 +90,15 @@ namespace AShop.Migrations
                     b.ToTable("Product");
                 });
 
-            modelBuilder.Entity("AShop.Models.Product", b =>
+            modelBuilder.Entity("AShop_Models.Product", b =>
                 {
-                    b.HasOne("AShop.Models.ApplicationType", "ApplicationType")
+                    b.HasOne("AShop_Models.ApplicationType", "ApplicationType")
                         .WithMany()
                         .HasForeignKey("ApplicationId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("AShop.Models.Category", "Category")
+                    b.HasOne("AShop_Models.Category", "Category")
                         .WithMany()
                         .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.Cascade)
