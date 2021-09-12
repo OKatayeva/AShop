@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using System.Text.Json;
 
-namespace AShop.Utility
+namespace AShop_Utility
 {
     //Session
     public static class SessionExtensions

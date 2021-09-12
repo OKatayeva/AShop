@@ -1,5 +1,5 @@
 ﻿using System;
-namespace AShop.Utility
+namespace AShop_Utility
 {
     public class MailjetSettings
     {

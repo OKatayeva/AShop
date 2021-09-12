@@ -1,5 +1,5 @@
 ﻿using System;
-namespace AShop
+namespace AShop_Utility
 {
     //webConstant
     public static class WC

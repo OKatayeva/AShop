@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using AShop.Data;
 using AShop.Models;
 using AShop.Models.ViewModels;
-using AShop.Utility;
+using AShop_Utility;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity.UI.Services;

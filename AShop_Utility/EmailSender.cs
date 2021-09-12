@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json.Linq;
 
-namespace AShop.Utility
+namespace AShop_Utility
 {
     public class EmailSender : IEmailSender
     {

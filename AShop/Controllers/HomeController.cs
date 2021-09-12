@@ -9,7 +9,7 @@ using AShop.Models;
 using AShop.Data;
 using AShop.Models.ViewModels;
 using Microsoft.EntityFrameworkCore;
-using AShop.Utility;
+using AShop_Utility;
 
 namespace AShop.Controllers
 {
