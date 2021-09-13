@@ -1,8 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace AShop.Migrations
+namespace AShop_Data.Migrations
 {
-    public partial class addApplicationTypeToDatabase : Migration
+    public partial class addCategoryToDatabase : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

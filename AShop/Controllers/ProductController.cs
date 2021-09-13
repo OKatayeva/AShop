@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using AShop.Data;
+using AShop_Data;
 using AShop_Models;
 using AShop_Models.ViewModels;
 using Microsoft.AspNetCore.Hosting;

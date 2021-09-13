@@ -20,7 +20,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Remove="Data\" />
     <None Remove="Microsoft.EntityFrameworkCore.SqlServer" />
     <None Remove="Microsoft.EntityFrameworkCore.Tools" />
     <None Remove="Microsoft.VisualStudio.Web.CodeGeneration.Design" />
@@ -33,7 +32,6 @@
     <None Remove="Mailjet.Api" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Data\" />
     <Folder Include="Views\ApplicationType\" />
     <Folder Include="Views\Product\" />
     <Folder Include="wwwroot\images\" />
@@ -55,6 +53,9 @@
       <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
     </ProjectReference>
     <ProjectReference Include="..\AShop_Models\AShop_Models.csproj">
+      <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
+    </ProjectReference>
+    <ProjectReference Include="..\AShop_Data\AShop_Data.csproj">
       <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
     </ProjectReference>
   </ItemGroup>

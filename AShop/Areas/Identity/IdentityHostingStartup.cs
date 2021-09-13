@@ -1,5 +1,5 @@
 using System;
-using AShop.Data;
+using AShop_Data;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI;
