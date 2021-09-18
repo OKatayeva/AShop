@@ -6,8 +6,6 @@ namespace AShop_Utility
     {
         //MacOS
         public const string ImagePath = @"/images/product/";
-        //Windows OS
-        //public const string ImagePath = @"\images\product\";
 
         public const string SessionCart = "ShoppingCartSession";
 
@@ -16,5 +14,10 @@ namespace AShop_Utility
         public const string CustomerRole = "Customer";
 
         public const string EmailAdmin = "oksana89@gmail.com";
+
+        public const string CategoryName = "Category";
+
+        public const string ApplicationTypeName = "ApplicationType";
+
     }
 }

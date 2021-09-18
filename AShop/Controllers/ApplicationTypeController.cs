@@ -9,24 +9,25 @@ using AShop_Data;
 using AShop_Models;
 using Microsoft.AspNetCore.Authorization;
 using AShop_Utility;
+using AShop_Data.Repository.IRepository;
 
 namespace AShop.Controllers
 {
     [Authorize(Roles = WC.AdminRole)]
     public class ApplicationTypeController : Controller
     {
-        private readonly AshopDB _context;
+        private readonly IApplicationTypeRepository _appTypeRepo;
 
-        public ApplicationTypeController(AshopDB context)
+        public ApplicationTypeController(IApplicationTypeRepository appTypeRepo)
         {
-            _context = context;
+            _appTypeRepo = appTypeRepo;
         }
 
         // GET: ApplicationType
         public IActionResult Index()
         {
             //return View(await _context.Category.ToListAsync());
-            IEnumerable<ApplicationType> objList = _context.ApplicationType;
+            IEnumerable<ApplicationType> objList = _appTypeRepo.GetAll();
             return View(objList);
         }
         // GET: ApplicationType/Create
@@ -41,8 +42,8 @@ namespace AShop.Controllers
         {
             if (ModelState.IsValid)
             {
-                _context.ApplicationType.Add(obj);
-                _context.SaveChanges();
+                _appTypeRepo.Add(obj);
+                _appTypeRepo.Save();
                 return RedirectToAction("Index");
             }
             else
@@ -55,7 +56,7 @@ namespace AShop.Controllers
         {
             if (id == null || id == 0)
                 return NotFound();
-            var obj = _context.ApplicationType.Find(id);
+            var obj = _appTypeRepo.Find(id.GetValueOrDefault());
             if (obj == null)
             {
                 return NotFound();
@@ -69,8 +70,8 @@ namespace AShop.Controllers
         {
             if (ModelState.IsValid)
             {
-                _context.ApplicationType.Update(obj);
-                _context.SaveChanges();
+                _appTypeRepo.Update(obj);
+                _appTypeRepo.Save();
                 return RedirectToAction("Index");
             }
             else
@@ -83,7 +84,7 @@ namespace AShop.Controllers
         {
             if (id == null || id == 0)
                 return NotFound();
-            var obj = _context.ApplicationType.Find(id);
+            var obj = _appTypeRepo.Find(id.GetValueOrDefault());
             if (obj == null)
             {
                 return NotFound();
@@ -96,14 +97,14 @@ namespace AShop.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult DeletePost(int? id)
         {
-            var obj = _context.ApplicationType.Find(id);
+            var obj = _appTypeRepo.Find(id.GetValueOrDefault());
 
             if (obj == null)
             {
                 return NotFound();
             }
-            _context.ApplicationType.Remove(obj);
-            _context.SaveChanges();
+            _appTypeRepo.Remove(obj);
+            _appTypeRepo.Save();
             return RedirectToAction("Index");
         }
     }

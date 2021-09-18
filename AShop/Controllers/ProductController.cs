@@ -12,18 +12,19 @@ using Microsoft.AspNetCore.Hosting;
 using System.IO;
 using Microsoft.AspNetCore.Authorization;
 using AShop_Utility;
+using AShop_Data.Repository.IRepository;
 
 namespace AShop.Controllers
 {
     [Authorize(Roles = WC.AdminRole)]
     public class ProductController : Controller
     {
-        private readonly AshopDB _context;
+        private readonly IProductRepository _prodRepo;
         private readonly IWebHostEnvironment _webHostEnvironment;
 
-        public ProductController(AshopDB context, IWebHostEnvironment webHostEnvironment)
+        public ProductController(IProductRepository prodRepo, IWebHostEnvironment webHostEnvironment)
         {
-            _context = context;
+            _prodRepo = prodRepo;
             _webHostEnvironment = webHostEnvironment;
         }
 
@@ -31,7 +32,7 @@ namespace AShop.Controllers
         public IActionResult Index()
         {
             //Eager loading (faster loading from database)
-            IEnumerable<Product> objList = _context.Product.Include(u=>u.Category).Include(u=>u.ApplicationType);
+            IEnumerable<Product> objList = _prodRepo.GetAll(includeProperties: "Category, ApplicationType");
 
             //Another way of loading data - slower
             //1.Load products
@@ -59,18 +60,8 @@ namespace AShop.Controllers
             ProductVM productVM = new ProductVM()
             {
                 Product = new Product(),
-                CategorySelectList = _context.Category.Select(i => new SelectListItem
-                {
-                    Text = i.Name,
-                    Value = i.Id.ToString()
-                }),
-
-                
-                ApplicationTypeSelectList = _context.ApplicationType.Select(i => new SelectListItem
-                {
-                    Text = i.Name,
-                    Value = i.Id.ToString()
-                })
+                CategorySelectList = _prodRepo.GetAllDropDownList(WC.CategoryName),
+                ApplicationTypeSelectList = _prodRepo.GetAllDropDownList(WC.ApplicationTypeName)
             };
 
 
@@ -82,7 +73,7 @@ namespace AShop.Controllers
             else
             {
                 //finding existing product
-                productVM.Product = _context.Product.Find(id);
+                productVM.Product = _prodRepo.Find(id.GetValueOrDefault());
                 if (productVM.Product == null)
                 {
                     return NotFound();
@@ -111,14 +102,14 @@ namespace AShop.Controllers
                         files[0].CopyTo(fileStream);
                     }
                     productVM.Product.Image = fileName + extension;
-                    _context.Product.Add(productVM.Product);
+                    _prodRepo.Add(productVM.Product);
 
                 }
 
                 else
                 {
                     //updating
-                    var objFromDb = _context.Product.AsNoTracking().FirstOrDefault(u => u.Id == productVM.Product.Id);
+                    var objFromDb = _prodRepo.FirstOrDefault(u => u.Id == productVM.Product.Id, isTracking:false);
                     if (files.Count > 0)
                     {
                         string upload = webRootPath + WC.ImagePath;
@@ -141,22 +132,13 @@ namespace AShop.Controllers
                     {
                         productVM.Product.Image = objFromDb.Image;
                     }
-                    _context.Product.Update(productVM.Product);
+                    _prodRepo.Update(productVM.Product);
                 }
-                _context.SaveChanges();
+                _prodRepo.Save();
                 return RedirectToAction("Index");
             }
-            productVM.CategorySelectList = _context.Category.Select(i => new SelectListItem
-            {
-                Text = i.Name,
-                Value = i.Id.ToString()
-            });
-
-            productVM.ApplicationTypeSelectList = _context.ApplicationType.Select(i => new SelectListItem
-            {
-                Text = i.Name,
-                Value = i.Id.ToString()
-            });
+            productVM.CategorySelectList = _prodRepo.GetAllDropDownList(WC.CategoryName);
+            productVM.ApplicationTypeSelectList = _prodRepo.GetAllDropDownList(WC.ApplicationTypeName);
             //productVM.ApplicationTypeSelectList = _context.ApplicationType.Select(i => new SelectListItem
             //{
             //    Text = i.Name,
@@ -175,7 +157,7 @@ namespace AShop.Controllers
             {
                 return NotFound();
             }
-            Product product = _context.Product.Include(u => u.Category).Include(u=> u.ApplicationType).FirstOrDefault(u => u.Id == id);
+            Product product = _prodRepo.FirstOrDefault(u => u.Id==id, includeProperties: "Category, ApplicationType");
             //product.Category = _context.Category.Find(product.CategoryId);
             if (product == null)
             {
@@ -191,7 +173,7 @@ namespace AShop.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult DeletePost(int? id)
         {
-            var obj = _context.Product.Find(id);
+            var obj = _prodRepo.Find(id.GetValueOrDefault());
 
             if (obj == null)
             {
@@ -207,8 +189,8 @@ namespace AShop.Controllers
                 System.IO.File.Delete(oldFile);
             }
 
-            _context.Product.Remove(obj);
-            _context.SaveChanges();
+            _prodRepo.Remove(obj);
+            _prodRepo.Save();
             return RedirectToAction("Index");
            
 
