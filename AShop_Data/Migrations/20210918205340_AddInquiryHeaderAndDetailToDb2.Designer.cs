@@ -4,14 +4,16 @@ using AShop_Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace AShop_Data.Migrations
 {
     [DbContext(typeof(AshopDB))]
-    partial class AshopDBModelSnapshot : ModelSnapshot
+    [Migration("20210918205340_AddInquiryHeaderAndDetailToDb2")]
+    partial class AddInquiryHeaderAndDetailToDb2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
