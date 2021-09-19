@@ -4,7 +4,7 @@ namespace AShop_Utility
     //webConstant
     public static class WC
     {
-        //MacOS
+        
         public const string ImagePath = @"/images/product/";
 
         public const string SessionCart = "ShoppingCartSession";
