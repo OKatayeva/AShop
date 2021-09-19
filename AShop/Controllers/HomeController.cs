@@ -10,26 +10,28 @@ using AShop_Data;
 using AShop_Models.ViewModels;
 using Microsoft.EntityFrameworkCore;
 using AShop_Utility;
+using AShop_Data.Repository.IRepository;
 
 namespace AShop.Controllers
 {
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-        private readonly AshopDB _context;
-
-        public HomeController(ILogger<HomeController> logger, AshopDB context)
+        private readonly IProductRepository _prodRepo;
+        private readonly ICategoryRepository _catRepo;
+        public HomeController(ILogger<HomeController> logger, IProductRepository prodRepo, ICategoryRepository catRepo)
         {
             _logger = logger;
-            _context = context;
+            _prodRepo = prodRepo;
+            _catRepo = catRepo;
         }
 
         public IActionResult Index()
         {
             HomeVM homeVM = new HomeVM()
             {
-                Products = _context.Product.Include(u => u.Category).Include(u => u.ApplicationType),
-                Categories = _context.Category
+                Products = _prodRepo.GetAll(includeProperties:"Category,ApplicationType"),
+                Categories = _catRepo.GetAll()
             };
             return View(homeVM);
         }
@@ -46,9 +48,7 @@ namespace AShop.Controllers
 
             DetailsVM DetailsVM = new DetailsVM()
             {
-                Product = _context.Product.Include(u => u.Category).Include(u => u.ApplicationType).
-                    Where(u => u.Id == id).FirstOrDefault(),
-
+                Product = _prodRepo.FirstOrDefault(u => u.Id == id, includeProperties:"Category,ApplicationType"),
                 ExistsInCart = false
             };
 

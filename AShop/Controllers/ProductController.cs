@@ -32,7 +32,7 @@ namespace AShop.Controllers
         public IActionResult Index()
         {
             //Eager loading (faster loading from database)
-            IEnumerable<Product> objList = _prodRepo.GetAll(includeProperties: "Category, ApplicationType");
+            IEnumerable<Product> objList = _prodRepo.GetAll(includeProperties:"Category,ApplicationType");
 
             //Another way of loading data - slower
             //1.Load products
@@ -157,7 +157,7 @@ namespace AShop.Controllers
             {
                 return NotFound();
             }
-            Product product = _prodRepo.FirstOrDefault(u => u.Id==id, includeProperties: "Category, ApplicationType");
+            Product product = _prodRepo.FirstOrDefault(u => u.Id==id, includeProperties:"Category,ApplicationType");
             //product.Category = _context.Category.Find(product.CategoryId);
             if (product == null)
             {

@@ -30,6 +30,7 @@
     <None Remove="Microsoft.AspNetCore.Identity.UI" />
     <None Remove="Views\Cart\" />
     <None Remove="Mailjet.Api" />
+    <None Remove="Views\Inquiry\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\ApplicationType\" />
@@ -37,6 +38,7 @@
     <Folder Include="wwwroot\images\" />
     <Folder Include="wwwroot\images\product\" />
     <Folder Include="Views\Cart\" />
+    <Folder Include="Views\Inquiry\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Remove="Migrations\20210815110116_addCategoryToDatabase.cs" />

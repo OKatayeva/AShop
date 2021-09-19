@@ -6,6 +6,7 @@ using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 using AShop_Data;
+using AShop_Data.Repository.IRepository;
 using AShop_Models;
 using AShop_Models.ViewModels;
 using AShop_Utility;
@@ -21,18 +22,27 @@ namespace AShop.Controllers
     [Authorize]
     public class CartController : Controller
     {
-        private readonly AshopDB _context;
+        
         private readonly IWebHostEnvironment _webHostEnvironment;
         private readonly IEmailSender _emailSender;
-
+        private readonly IApplicationUserRepository _userRepo;
+        private readonly IInquiryHeaderRepository _inqHeaderRepo;
+        private readonly IInquiryDetailsRepository _inqDetailsRepo;
+        private readonly IProductRepository _prodRepo;
         [BindProperty]
         public ProductUserViewModel ProductUserViewModel { get; set; }
 
-        public CartController(AshopDB context, IWebHostEnvironment webHostEnvironment, IEmailSender emailSender)
+        public CartController(IWebHostEnvironment webHostEnvironment, IEmailSender emailSender,
+            IApplicationUserRepository userRepo, IInquiryHeaderRepository inqHeaderRepo,
+            IInquiryDetailsRepository inqDetailsRepo, IProductRepository prodRepo)
         {
-            _context = context;
+            
             _webHostEnvironment = webHostEnvironment;
             _emailSender = emailSender;
+            _userRepo = userRepo;
+            _inqHeaderRepo = inqHeaderRepo;
+            _inqDetailsRepo = inqDetailsRepo;
+            _prodRepo = prodRepo;
         }
         public IActionResult Index()
         {
@@ -44,7 +54,7 @@ namespace AShop.Controllers
                 shoppingCartList = HttpContext.Session.Get<List<ShoppingCart>>(WC.SessionCart);
             }
             List<int> prodInCart = shoppingCartList.Select(i => i.ProductId).ToList();
-            IEnumerable<Product> productList = _context.Product.Where(u => prodInCart.Contains(u.Id));
+            IEnumerable<Product> productList = _prodRepo.GetAll(u => prodInCart.Contains(u.Id));
             return View(productList);
         }
 
@@ -86,10 +96,10 @@ namespace AShop.Controllers
                 shoppingCartList = HttpContext.Session.Get<List<ShoppingCart>>(WC.SessionCart);
             }
             List<int> prodInCart = shoppingCartList.Select(i => i.ProductId).ToList();
-            IEnumerable<Product> productList = _context.Product.Where(u => prodInCart.Contains(u.Id));
+            IEnumerable<Product> productList = _prodRepo.GetAll(u => prodInCart.Contains(u.Id));
             ProductUserViewModel = new ProductUserViewModel()
             {
-                ApplicationUser = _context.ApplicationUser.FirstOrDefault(u => u.Id == claim.Value),
+                ApplicationUser = _userRepo.FirstOrDefault(u => u.Id == claim.Value),
                 ProductList = productList.ToList()
             };
 
@@ -101,6 +111,8 @@ namespace AShop.Controllers
         [ActionName("Summary")]
         public async Task <IActionResult> SummaryPost(ProductUserViewModel productUserViewModel)
         {
+            var claimsIdentity = (ClaimsIdentity)User.Identity;
+            var claim = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier);
 
             var pathToTemplate = _webHostEnvironment.WebRootPath + Path.DirectorySeparatorChar.ToString()
                 + "templates" + Path.DirectorySeparatorChar.ToString() +
@@ -124,10 +136,33 @@ namespace AShop.Controllers
                 ProductUserViewModel.ApplicationUser.PhoneNumber,
                 productList.ToString());
             await _emailSender.SendEmailAsync(WC.EmailAdmin, subject, messageBody);
+            InquiryHeader inquiryHeader = new InquiryHeader()
+            {
+                ApplicationUserId = claim.Value,
+                FullName = ProductUserViewModel.ApplicationUser.FullName,
+                PhoneNumber = ProductUserViewModel.ApplicationUser.PhoneNumber,
+                Email = ProductUserViewModel.ApplicationUser.Email,
+                InquiryDate = DateTime.Now
+            };
+
+            _inqHeaderRepo.Add(inquiryHeader);
+            _inqHeaderRepo.Save();
+
+            foreach(var product in ProductUserViewModel.ProductList)
+            {
+                InquiryDetails inquiryDetails = new InquiryDetails()
+                {
+                    InquiryHeaderId = inquiryHeader.Id,
+                    ProductId = product.Id
+                };
+                _inqDetailsRepo.Add(inquiryDetails);
+            }
+            _inqDetailsRepo.Save();
             return RedirectToAction(nameof(InquiryConfirmation));
         }
 
-       
+     
+
         public IActionResult InquiryConfirmation(ProductUserViewModel productUserViewModel)
         {
 
