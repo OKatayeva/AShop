@@ -6,6 +6,8 @@ namespace AShop_Models
 {
     public class InquiryHeader
     {
+        public int InquiryHeaderId;
+
         [Key]
         public int Id { get; set; }
 

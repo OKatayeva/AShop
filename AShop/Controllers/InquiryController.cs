@@ -14,7 +14,7 @@ using AShop_Models.ViewModels;
 
 namespace AShop.Controllers
 {
-
+    [Authorize(WC.AdminRole)]
     public class InquiryController : Controller
     {
         private readonly IInquiryHeaderRepository _inqHeaderRepo;
@@ -39,9 +39,39 @@ namespace AShop.Controllers
             };
             return View(InquiryVM);
         }
-        
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Details()
+        {
+            List<ShoppingCart> shoppingCartList = new List<ShoppingCart>();
+            InquiryVM.InquiryDetails = _inqDetailsRepo.GetAll(u => u.InquiryHeaderId == InquiryVM.InquiryHeader.Id);
+            foreach (var detail in InquiryVM.InquiryDetails)
+            {
+                ShoppingCart shoppingCart = new ShoppingCart()
+                {
+                    ProductId = detail.ProductId
+                };
+                shoppingCartList.Add(shoppingCart);
 
+            }
+            HttpContext.Session.Clear();
+            HttpContext.Session.Set(WC.SessionCart, shoppingCartList);
+            HttpContext.Session.Set(WC.SessionInquiryId, InquiryVM.InquiryHeader.Id);
+            return RedirectToAction("Index", "Cart");
+        }
+        [HttpPost]
+        public IActionResult Delete()
+        {
+            InquiryHeader inquiryHeader = _inqHeaderRepo.FirstOrDefault(u => u.Id == InquiryVM.InquiryHeader.Id);
+            IEnumerable<InquiryDetails> inquiryDetails = _inqDetailsRepo.GetAll(u => u.InquiryHeaderId == InquiryVM.InquiryHeader.Id);
+
+            _inqDetailsRepo.RemoveRange(inquiryDetails);
+            _inqHeaderRepo.Remove(inquiryHeader);
+            _inqHeaderRepo.Save();
+
+            return RedirectToAction(nameof(Index));
+        }
         #region API calls
         [HttpGet]
         public IActionResult GetInquiryList()

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using AShop_Data.Repository.IRepository;
 using Microsoft.EntityFrameworkCore;
@@ -79,6 +80,10 @@ namespace AShop_Data.Repository
             dbSet.Remove(entity);
         }
 
+        public void RemoveRange(IEnumerable<T> entity)
+        {
+            dbSet.RemoveRange(entity);
+        }
         public void Save()
         {
             _context.SaveChanges();
