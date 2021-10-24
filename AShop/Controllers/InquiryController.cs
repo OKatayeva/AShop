@@ -14,7 +14,7 @@ using AShop_Models.ViewModels;
 
 namespace AShop.Controllers
 {
-    [Authorize(WC.AdminRole)]
+    [Authorize(Roles = WC.AdminRole)]
     public class InquiryController : Controller
     {
         private readonly IInquiryHeaderRepository _inqHeaderRepo;

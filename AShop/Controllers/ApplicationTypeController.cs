@@ -44,10 +44,11 @@ namespace AShop.Controllers
             {
                 _appTypeRepo.Add(obj);
                 _appTypeRepo.Save();
+                TempData[WC.Success] = "Action completed!";
                 return RedirectToAction("Index");
             }
-            else
-                return View(obj);
+            TempData[WC.Error] = "Error!";
+            return View(obj);
 
         }
 
@@ -72,10 +73,11 @@ namespace AShop.Controllers
             {
                 _appTypeRepo.Update(obj);
                 _appTypeRepo.Save();
+                TempData[WC.Success] = "Action completed!";
                 return RedirectToAction("Index");
             }
-            else
-                return View(obj);
+            TempData[WC.Error] = "Error!";
+            return View(obj);
 
         }
 
@@ -105,6 +107,7 @@ namespace AShop.Controllers
             }
             _appTypeRepo.Remove(obj);
             _appTypeRepo.Save();
+            TempData[WC.Success] = "Action completed!";
             return RedirectToAction("Index");
         }
     }

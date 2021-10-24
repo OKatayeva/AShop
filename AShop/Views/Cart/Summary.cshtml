@@ -1,5 +1,6 @@
 ﻿@model AShop_Models.ViewModels.ProductUserViewModel
 
+
 <form method="post">
     <br />
     <div class="backgroundWhiteBorder">
@@ -48,6 +49,58 @@
                                     <div class="col-9">
                                         <input asp-for="ApplicationUser.Email" type="text" class="form-control" />
                                         <span asp-validation-for="ApplicationUser.Email" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="row my-1">
+                                    <div class="col-3">
+                                        <label>Address</label>
+                                    </div>
+                                    <div class="col-9">
+                                        <input asp-for="ApplicationUser.StreetAddress" type="text" class="form-control" />
+                                    </div>
+                                </div>
+
+                                <div class="row my-1">
+                                    <div class="col-3">
+                                        <label>City</label>
+                                    </div>
+                                    <div class="col-9">
+                                        <input asp-for="ApplicationUser.City" type="text" class="form-control" />
+                                    </div>
+                                </div>
+
+                                <div class="row my-1">
+                                    <div class="col-3">
+                                        <label>State</label>
+                                    </div>
+                                    <div class="col-9">
+                                        <input asp-for="ApplicationUser.State" type="text" class="form-control" />
+                                    </div>
+                                </div>
+
+                                <div class="row my-1">
+                                    <div class="col-3">
+                                        <label>Postal Code</label>
+                                    </div>
+                                    <div class="col-9">
+                                        <input asp-for="ApplicationUser.PostalCode" type="text" class="form-control" />
+                                    </div>
+                                </div>
+                                <div class="row my-1">
+                                    <div class="form-check">
+                                        @*<input asp-for="ApplicationUser.IsCompany" type="checkbox" value="@Model.ApplicationUser.IsCompany" id="IsCompany"/>*@
+                                        <label class="form-check-label" for="IsCompany">
+                                            Buyer is company?
+                                        </label>
+                                        @Html.CheckBoxFor(model => model.ApplicationUser.IsCompany)
+                                    </div>
+                                </div>
+                                <div class="row my-1">
+                                    <div class="col-3">
+                                        <label>VAT number</label>
+                                    </div>
+                                    <div class="col-9">
+                                        <input asp-for="ApplicationUser.VATNumber" type="text" class="form-control" />
                                     </div>
                                 </div>
                             </div>

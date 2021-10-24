@@ -4,14 +4,16 @@ using AShop_Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace AShop_Data.Migrations
 {
     [DbContext(typeof(AshopDB))]
-    partial class AshopDBModelSnapshot : ModelSnapshot
+    [Migration("20211022211849_AddOrderHeaderAndDetailToDb")]
+    partial class AddOrderHeaderAndDetailToDb
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -124,6 +126,9 @@ namespace AShop_Data.Migrations
                     b.Property<int>("ProductId")
                         .HasColumnType("int");
 
+                    b.Property<double>("TotalPrice")
+                        .HasColumnType("float");
+
                     b.HasKey("Id");
 
                     b.HasIndex("OrderHeaderId");
@@ -143,9 +148,6 @@ namespace AShop_Data.Migrations
                     b.Property<string>("City")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("CreatedByUserId")
-                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Email")
                         .HasColumnType("nvarchar(max)");
@@ -195,8 +197,6 @@ namespace AShop_Data.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("CreatedByUserId");
 
                     b.ToTable("OrderHeader");
                 });
@@ -446,7 +446,6 @@ namespace AShop_Data.Migrations
                     b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUser");
 
                     b.Property<string>("FullName")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasDiscriminator().HasValue("ApplicationUser");
@@ -497,15 +496,6 @@ namespace AShop_Data.Migrations
                     b.Navigation("OrderHeader");
 
                     b.Navigation("Product");
-                });
-
-            modelBuilder.Entity("AShop_Models.OrderHeader", b =>
-                {
-                    b.HasOne("AShop_Models.ApplicationUser", "CreatedBy")
-                        .WithMany()
-                        .HasForeignKey("CreatedByUserId");
-
-                    b.Navigation("CreatedBy");
                 });
 
             modelBuilder.Entity("AShop_Models.Product", b =>

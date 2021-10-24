@@ -135,6 +135,7 @@ namespace AShop.Controllers
                     _prodRepo.Update(productVM.Product);
                 }
                 _prodRepo.Save();
+                TempData[WC.Success] = "Action completed!";
                 return RedirectToAction("Index");
             }
             productVM.CategorySelectList = _prodRepo.GetAllDropDownList(WC.CategoryName);
@@ -191,6 +192,7 @@ namespace AShop.Controllers
 
             _prodRepo.Remove(obj);
             _prodRepo.Save();
+            TempData[WC.Success] = "Action completed!";
             return RedirectToAction("Index");
            
 
