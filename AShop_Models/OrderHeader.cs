@@ -18,6 +18,7 @@ namespace AShop_Models
         public DateTime ShippingDate { get; set; }
         [Required]
         public double FinalOrderTotal { get; set; }
+
         public string OrderStatus { get; set; }
         public DateTime PaymentDate { get; set; }
         public DateTime PaymentDueDate { get; set; }
@@ -37,6 +38,7 @@ namespace AShop_Models
         public string PostalCode { get; set; }
         [Required]
         public string FullName { get; set; }
+        [Required]
         public string Email { get; set; }
     }
 }

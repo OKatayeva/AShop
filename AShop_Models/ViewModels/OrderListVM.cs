@@ -11,5 +11,7 @@ namespace AShop_Models.ViewModels
         public IEnumerable<SelectListItem> StatusList { get; set; }
 
         public string Status { get; set; }
+
+        
     }
 }
