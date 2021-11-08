@@ -17,6 +17,9 @@ namespace AShop.Controllers
         private readonly IOrderHeaderRepository _orderHeaderRepo;
         private readonly IOrderDetailRepository _orderDetailRepo;
 
+        //[BindProperties]
+        public OrderVM OrderVM { get; set; }
+
         public OrderController(IOrderHeaderRepository orderHeaderRepo,
             IOrderDetailRepository orderDetailRepo)
         {
@@ -56,7 +59,7 @@ namespace AShop.Controllers
                 orderListVM.OrderHeaderList = orderListVM.OrderHeaderList.Where(u => u.OrderStatus.ToLower().Contains(Status.ToLower()));
             };
 
-            if (searchIsCompany.HasValue && searchIsCompany.ToString() != "--Is Company?--")
+            if (searchIsCompany.HasValue)
             {
                 orderListVM.OrderHeaderList = orderListVM.OrderHeaderList.Where(u => u.IsCompany.Equals(searchIsCompany));
             };
@@ -64,6 +67,16 @@ namespace AShop.Controllers
             
 
             return View(orderListVM);
+        }
+
+        public IActionResult Details(int id)
+        {
+            OrderVM = new OrderVM()
+            {
+                OrderHeader = _orderHeaderRepo.FirstOrDefault(u => u.Id == id),
+                OrderDetail = _orderDetailRepo.GetAll(m => m.OrderHeaderId == id, includeProperties: "Product")
+            };
+            return View(OrderVM);
         }
     }
 }
