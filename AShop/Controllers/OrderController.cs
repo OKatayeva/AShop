@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AShop_Data.Repository.IRepository;
+using AShop_Models;
 using AShop_Models.ViewModels;
 using AShop_Utility;
 using Microsoft.AspNetCore.Mvc;
@@ -17,7 +18,7 @@ namespace AShop.Controllers
         private readonly IOrderHeaderRepository _orderHeaderRepo;
         private readonly IOrderDetailRepository _orderDetailRepo;
 
-        //[BindProperties]
+        [BindProperty]
         public OrderVM OrderVM { get; set; }
 
         public OrderController(IOrderHeaderRepository orderHeaderRepo,
@@ -77,6 +78,44 @@ namespace AShop.Controllers
                 OrderDetail = _orderDetailRepo.GetAll(m => m.OrderHeaderId == id, includeProperties: "Product")
             };
             return View(OrderVM);
+        }
+
+        [HttpPost]
+        public IActionResult Approve()
+        {
+            OrderHeader orderHeader = _orderHeaderRepo.FirstOrDefault(u => u.Id == OrderVM.OrderHeader.Id);
+            orderHeader.OrderStatus = WC.StatusApproved;
+            _orderHeaderRepo.Save();
+            return RedirectToAction(nameof(Index));
+        }
+
+        [HttpPost]
+        public IActionResult StartProcessing()
+        {
+            OrderHeader orderHeader = _orderHeaderRepo.FirstOrDefault(u => u.Id == OrderVM.OrderHeader.Id);
+            orderHeader.OrderStatus = WC.StatusInProcess;
+            _orderHeaderRepo.Save();
+            TempData[WC.Success] = "Order is In Process";
+            return RedirectToAction(nameof(Index));
+        }
+
+        [HttpPost]
+        public IActionResult ShipOrder()
+        {
+            OrderHeader orderHeader = _orderHeaderRepo.FirstOrDefault(u => u.Id == OrderVM.OrderHeader.Id);
+            orderHeader.OrderStatus = WC.StatusShipped;
+            orderHeader.ShippingDate = DateTime.Now;
+            _orderHeaderRepo.Save();
+            return RedirectToAction(nameof(Index));
+        }
+
+        [HttpPost]
+        public IActionResult CancelOrder()
+        {
+            OrderHeader orderHeader = _orderHeaderRepo.FirstOrDefault(u => u.Id == OrderVM.OrderHeader.Id);
+            orderHeader.OrderStatus = WC.StatusCancelled;
+            _orderHeaderRepo.Save();
+            return RedirectToAction(nameof(Index));
         }
     }
 }
