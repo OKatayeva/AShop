@@ -86,7 +86,8 @@ namespace AShop.Controllers
             OrderHeader orderHeader = _orderHeaderRepo.FirstOrDefault(u => u.Id == OrderVM.OrderHeader.Id);
             orderHeader.OrderStatus = WC.StatusApproved;
             _orderHeaderRepo.Save();
-            return RedirectToAction(nameof(Index));
+            TempData[WC.Success] = "Order is approved!";
+            return RedirectToAction("Details", "Order", new { id = orderHeader.Id });
         }
 
         [HttpPost]
@@ -95,8 +96,8 @@ namespace AShop.Controllers
             OrderHeader orderHeader = _orderHeaderRepo.FirstOrDefault(u => u.Id == OrderVM.OrderHeader.Id);
             orderHeader.OrderStatus = WC.StatusInProcess;
             _orderHeaderRepo.Save();
-            TempData[WC.Success] = "Order is In Process";
-            return RedirectToAction(nameof(Index));
+            TempData[WC.Success] = "Order is in process!";
+            return RedirectToAction("Details", "Order", new { id = orderHeader.Id });
         }
 
         [HttpPost]
@@ -106,7 +107,8 @@ namespace AShop.Controllers
             orderHeader.OrderStatus = WC.StatusShipped;
             orderHeader.ShippingDate = DateTime.Now;
             _orderHeaderRepo.Save();
-            return RedirectToAction(nameof(Index));
+            TempData[WC.Success] = "Order is shipped!";
+            return RedirectToAction("Details", "Order", new { id = orderHeader.Id });
         }
 
         [HttpPost]
@@ -115,7 +117,27 @@ namespace AShop.Controllers
             OrderHeader orderHeader = _orderHeaderRepo.FirstOrDefault(u => u.Id == OrderVM.OrderHeader.Id);
             orderHeader.OrderStatus = WC.StatusCancelled;
             _orderHeaderRepo.Save();
-            return RedirectToAction(nameof(Index));
+            TempData[WC.Success] = "Order is cancelled!";
+            return RedirectToAction("Details", "Order", new { id = orderHeader.Id });
+        }
+
+        [HttpPost]
+        public IActionResult UpdateOrderDetails()
+        {
+            OrderHeader orderHeaderFromDb = _orderHeaderRepo.FirstOrDefault(u => u.Id == OrderVM.OrderHeader.Id);
+            orderHeaderFromDb.FullName = OrderVM.OrderHeader.FullName;
+            orderHeaderFromDb.PhoneNumber = OrderVM.OrderHeader.PhoneNumber;
+            orderHeaderFromDb.StreetAddress = OrderVM.OrderHeader.StreetAddress;
+            orderHeaderFromDb.City = OrderVM.OrderHeader.City;
+            orderHeaderFromDb.State = OrderVM.OrderHeader.State;
+            orderHeaderFromDb.PostalCode = OrderVM.OrderHeader.PostalCode;
+            orderHeaderFromDb.Email = OrderVM.OrderHeader.Email;
+            orderHeaderFromDb.IsCompany = OrderVM.OrderHeader.IsCompany;
+            orderHeaderFromDb.VATNumber = OrderVM.OrderHeader.VATNumber;
+            _orderHeaderRepo.Save();
+
+            TempData[WC.Success] = "Order Details updated!";
+            return RedirectToAction("Details", "Order", new { id = orderHeaderFromDb.Id });
         }
     }
 }
