@@ -3,7 +3,7 @@
 
 <form method="post">
     <br />
-    <div class="backgroundWhiteBorder">
+    <div>
         <div class="container">
             <div class="card">
                 <div class="card-header bg-dark text-light ml-0 row container">
@@ -26,7 +26,7 @@
                                 </div>
                                 <div class="row my-1">
                                     <div class="col-3">
-                                        <label>Name</label>
+                                        <label>Name*</label>
                                     </div>
                                     <div class="col-9">
                                         <input asp-for="ApplicationUser.FullName" type="text" class="form-control" />
@@ -35,7 +35,7 @@
                                 </div>
                                 <div class="row my-1">
                                     <div class="col-3">
-                                        <label>Phone</label>
+                                        <label>Phone*</label>
                                     </div>
                                     <div class="col-9">
                                         <input asp-for="ApplicationUser.PhoneNumber" type="text" class="form-control" />
@@ -44,7 +44,7 @@
                                 </div>
                                 <div class="row my-1">
                                     <div class="col-3">
-                                        <label>Email</label>
+                                        <label>Email*</label>
                                     </div>
                                     <div class="col-9">
                                         <input asp-for="ApplicationUser.Email" type="text" class="form-control" />
@@ -53,7 +53,7 @@
                                 </div>
                                 <div class="row my-1">
                                     <div class="col-3">
-                                        <label>Address</label>
+                                        <label>Address*</label>
                                     </div>
                                     <div class="col-9">
                                         <input asp-for="ApplicationUser.StreetAddress" type="text" class="form-control" />
@@ -63,7 +63,7 @@
 
                                 <div class="row my-1">
                                     <div class="col-3">
-                                        <label>City</label>
+                                        <label>City*</label>
                                     </div>
                                     <div class="col-9">
                                         <input asp-for="ApplicationUser.City" type="text" class="form-control" />
@@ -73,7 +73,7 @@
 
                                 <div class="row my-1">
                                     <div class="col-3">
-                                        <label>State</label>
+                                        <label>State*</label>
                                     </div>
                                     <div class="col-9">
                                         <input asp-for="ApplicationUser.State" type="text" class="form-control" />
@@ -83,7 +83,7 @@
 
                                 <div class="row my-1">
                                     <div class="col-3">
-                                        <label>Postal Code</label>
+                                        <label>Postal Code*</label>
                                     </div>
                                     <div class="col-9">
                                         <input asp-for="ApplicationUser.PostalCode" type="text" class="form-control" />
@@ -95,7 +95,7 @@
                                         <label class="form-check-label" for="IsCompany">
                                             Buyer is company?
                                         </label>
-                                        
+
                                     </div>
                                     <div class="col-9">
                                         @Html.CheckBoxFor(model => model.ApplicationUser.IsCompany)
@@ -117,18 +117,27 @@
                                         <span class="text-info">Products:</span>
                                     </h4>
                                     <ul class="list-group mb-3">
+                                        @{ var orderTotal = 0.0;}
                                         @for (int i = 0; i < Model.ProductList.Count(); i++)
                                         {
                                             <input type="hidden" asp-for="@Model.ProductList[i].Id" />
                                             <input type="hidden" asp-for="@Model.ProductList[i].Name" />
                                             <input type="hidden" asp-for="@Model.ProductList[i].Price" />
+                                            <input type="hidden" asp-for="@Model.ProductList[i].ProductQuantity" />
                                             <li class="list-group-item d-flex justify-content-between">
                                                 <div>
                                                     <h6 class="my-0">@Model.ProductList[i].Name</h6>
                                                     <small class="text-muted">Price: @Model.ProductList[i].Price EUR</small>
+                                                    <small class="text-muted"> Quantity: @Model.ProductList[i].ProductQuantity </small>
+                                                    @*<input id="Quantity" asp-for=@Model.ProductList[i].ProductQuantity type="number" class="form-control"/>*@
                                                 </div>
                                             </li>
+                                            orderTotal += Model.ProductList[i].Price * Model.ProductList[i].ProductQuantity;
                                         }
+                                        <li class="list-group-item d-flex justify-content-between bg-light">
+                                            <strong class="text-info"> Total</strong>
+                                            <strong class="text-info">@orderTotal EUR</strong>
+                                        </li>
                                     </ul>
                                 </div>
                             </div>
@@ -138,7 +147,7 @@
                 <div class="card-footer">
                     <div class="row">
                         <div class="col-12 col-md-5 offset-md-7">
-                            <button type="submit" class="btn btn-primary form-control">Submit Order</button>
+                            <button type="submit" onclick="return validateInput()" class="btn btn-primary form-control">Submit Order</button>
                         </div>
                     </div>
                 </div>
@@ -147,8 +156,77 @@
     </div>
 </form>
 
-
-@section Scripts{
-    <partial name="_ValidationScriptsPartial" />
+@section Scripts
+{
+    @{
+        <partial name="_validationScriptsPartial" />
+    }
+<script>
+    function validateInput() {
+        var app_name = document.getElementById("ApplicationUser_FullName").value;
+        var app_phone = document.getElementById("ApplicationUser_PhoneNumber").value;
+        var app_email = document.getElementById("ApplicationUser_Email").value;
+        var app_streetaddress = document.getElementById("ApplicationUser_StreetAddress").value;
+        var app_city = document.getElementById("ApplicationUser_City").value;
+        var app_state = document.getElementById("ApplicationUser_State").value;
+        var app_postalcode = document.getElementById("ApplicationUser_PostalCode").value;
+        if (app_name.toString() == '') {
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Please enter Full Name!'
+            })
+            return false;
+        }
+        if (app_phone.toString() == '') {
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Please enter Phone Number!'
+            })
+            return false;
+        }
+        if (app_email.toString() == '') {
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Please enter Email!'
+            })
+            return false;
+        }
+        if (app_streetaddress.toString() == '') {
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Please enter Address!'
+            })
+            return false;
+        }
+        if (app_city.toString() == '') {
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Please enter City!'
+            })
+            return false;
+        }
+        if (app_state.toString() == '') {
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Please enter State!'
+            })
+            return false;
+        }
+        if(app_postalcode.toString() == '') {
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Please enter Postal Code!'
+            })
+            return false;
+        }
+        return true;
+    }
+</script>
 }
-

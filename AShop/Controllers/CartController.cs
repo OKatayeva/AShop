@@ -60,12 +60,35 @@ namespace AShop.Controllers
             {
                 //session exists
                 shoppingCartList = HttpContext.Session.Get<List<ShoppingCart>>(WC.SessionCart);
+                
             }
             List<int> prodInCart = shoppingCartList.Select(i => i.ProductId).ToList();
-            IEnumerable<Product> productList = _prodRepo.GetAll(u => prodInCart.Contains(u.Id));
-            return View(productList);
+            
+            IEnumerable<Product> productListTemp = _prodRepo.GetAll(u => prodInCart.Contains(u.Id));
+            IList<Product> prodList = new List<Product>();
+            foreach (var cartObj in shoppingCartList)
+            {
+                Product prodTemp = productListTemp.FirstOrDefault(u => u.Id == cartObj.ProductId);
+                prodTemp.ProductQuantity = cartObj.ProdQuantity;
+                prodList.Add(prodTemp);
+            }
+            return View(prodList);
         }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [ActionName("Index")]
+        public IActionResult IndexPost(IEnumerable<Product> ProdList)
+        {
+            List<ShoppingCart> shoppingCartList = new List<ShoppingCart>();
+            foreach (Product prod in ProdList)
+            {
+                shoppingCartList.Add(new ShoppingCart { ProductId = prod.Id, ProdQuantity = prod.ProductQuantity });
+            }
+
+            HttpContext.Session.Set(WC.SessionCart, shoppingCartList);
+            return RedirectToAction(nameof(Summary));
+        }
         public IActionResult Remove(int id)
         {
             List<ShoppingCart> shoppingCartList = new List<ShoppingCart>();
@@ -81,20 +104,14 @@ namespace AShop.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        [ActionName ("Index")]
-        public IActionResult IndexPost()
-        {
-            
-            return RedirectToAction(nameof(Summary));
-        }
+        
 
         public IActionResult Summary()
         {
             var claimsIdentity = (ClaimsIdentity)User.Identity;
             var claim = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier);
-
+            //ApplicationUser applicationUser;
+            //applicationUser = _userRepo.FirstOrDefault(u => u.Id == claim.Value);
             //var userId = User.FindFirstValue(ClaimTypes.Name);
             List<ShoppingCart> shoppingCartList = new List<ShoppingCart>();
             if (HttpContext.Session.Get<IEnumerable<ShoppingCart>>(WC.SessionCart) != null
@@ -108,9 +125,14 @@ namespace AShop.Controllers
             ProductUserViewModel = new ProductUserViewModel()
             {
                 ApplicationUser = _userRepo.FirstOrDefault(u => u.Id == claim.Value),
-                ProductList = productList.ToList()
+                //ProductList = productList.ToList()
             };
-
+            foreach (var cartObj in shoppingCartList)
+            {
+                Product prodTemp = _prodRepo.FirstOrDefault(u => u.Id == cartObj.ProductId);
+                prodTemp.ProductQuantity = cartObj.ProdQuantity;
+                ProductUserViewModel.ProductList.Add(prodTemp);
+            }
             return View(ProductUserViewModel);
         }
 
@@ -154,7 +176,9 @@ namespace AShop.Controllers
                 {
                     OrderHeaderId = orderHeader.Id,
                     Price = product.Price,
-                    ProductId = product.Id
+                    ProductId = product.Id,
+                    Quantity = product.ProductQuantity,
+                    
                 };
                 _orderDetailRepo.Add(orderDetail);
             }

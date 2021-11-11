@@ -20,9 +20,7 @@ namespace AShop_Models
         public double FinalOrderTotal { get; set; }
 
         public string OrderStatus { get; set; }
-        public DateTime PaymentDate { get; set; }
-        public DateTime PaymentDueDate { get; set; }
-        
+       
         [Required]
         public bool IsCompany { get; set; }
         public string VATNumber { get; set; }

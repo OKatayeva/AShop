@@ -20,6 +20,10 @@ namespace AShop_Models
         [Range(1, int.MaxValue)]
         public double Price { get; set; }
 
+        //[NotMapped]
+        [Range(1, 1000, ErrorMessage = "Quantity must be greater than 0.")]
+        public int ProductQuantity { get; set; }
+
         public string Image { get; set; }
 
         [Display(Name ="Category Type")]

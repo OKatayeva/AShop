@@ -1,10 +1,10 @@
-﻿@model IEnumerable<Product>
+﻿@model List<Product>
 @using AShop_Utility
 @if (Model.Count() > 0)
 {
     <form method="post">
         <br />
-        <div class="backgroundWhiteBorder">
+        <div>
             <div class="container row">
                 <div class="col -8">
                     <div class="card mt-4">
@@ -34,27 +34,64 @@
                             </div>
 
                             <hr />
-                            @foreach (var obj in Model)
+                            @{
+                                var orderTotal = 0.0;
+                            }
+                            @for (int i = 0; i < Model.Count(); i++)
                             {
+                                <input hidden asp-for="@Model[i].Id" />
                                 <div class="row h-100">
                                     <div class="col-4 col-md-2 text-center py-2">
-                                        <img src="@WC.ImagePath@obj.Image" class="rounded" width="100%" />
+                                        <img src="@WC.ImagePath@Model[i].Image" class="rounded" width="100%" />
                                     </div>
-                                    <div class="col-8 col-lg-7">
-                                        <h5>@obj.Name</h5>
-                                        <div style="font-size:15px;">@obj.ShortDescription</div>
-                                    </div>
+                                    @if (User.IsInRole(WC.AdminRole))
+                                    {
+
+                                        <div class="col-8 col-lg-3">
+                                            <h5>@Model[i].Name</h5>
+                                            <div style="font-size:11px;">@Model[i].ShortDescription</div>
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <div class="col-8 col-lg-7">
+                                            <h5>@Model[i].Name</h5>
+                                            <div style="font-size:11px;">@Model[i].ShortDescription</div>
+                                        </div>
+                                    }
                                     <div class="col-3 col-lg-2 pt-lg-4" style="font-size:11px;">
-                                        <span style="font-size:17px;"> @obj.Price EUR</span>
+                                        <span style="font-size:17px;"> @Model[i].Price EUR</span>
 
                                     </div>
+                                    @if (User.IsInRole(WC.AdminRole))
+                                    {
+                                        <div class="col-4 col-lg-2 pt-lg-4" style="font-size:11px;">
+                                            <input type="number" asp-for="@Model[i].ProductQuantity" class="form-control" />
+                                            <span asp-validation-for="@Model[i].ProductQuantity" class="text-danger"></span>
+                                        </div>
+                                        <div class="col-3 col-lg-2 pt-lg-4" style="font-size:11px;">
+                                            <span style="font-size:17px;"> @(Model[i].Price* Model[i].ProductQuantity) EUR</span>
+
+
+                                        </div>
+                                    }
                                     <div class="col-2 col-lg-1 p-0 pt-lg-4 text-center">
-                                        <a asp-action="Remove" asp-route-id="@obj.Id" class="btn btn-outline-danger">
+                                        <a asp-action="Remove" asp-route-id="@Model[i].Id" class="btn btn-outline-danger">
                                             <i class="fas fa-trash"></i>
                                         </a>
                                     </div>
                                 </div>
-                            <hr />
+                                orderTotal += Model[i].Price * Model[i].ProductQuantity;
+                                <hr />
+                            }
+
+                            @if (User.IsInRole(WC.AdminRole))
+                            {
+                                <div class="row">
+                                    <div class="col-12 text-right pr-4">
+                                        Order Total : @orderTotal
+                                    </div>
+                                </div>
                             }
                         </div>
                         <div class="card-footer">
@@ -75,4 +112,8 @@
 else
 {
     <p>Shopping cart is empty.</p>
-}   
+}
+
+@section Scripts{
+    <partial name="_ValidationScriptsPartial" />
+} 

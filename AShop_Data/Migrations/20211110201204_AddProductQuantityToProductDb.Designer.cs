@@ -4,14 +4,16 @@ using AShop_Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace AShop_Data.Migrations
 {
     [DbContext(typeof(AshopDB))]
-    partial class AshopDBModelSnapshot : ModelSnapshot
+    [Migration("20211110201204_AddProductQuantityToProductDb")]
+    partial class AddProductQuantityToProductDb
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -169,6 +171,12 @@ namespace AShop_Data.Migrations
 
                     b.Property<string>("OrderStatus")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("PaymentDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("PaymentDueDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("PhoneNumber")
                         .IsRequired()

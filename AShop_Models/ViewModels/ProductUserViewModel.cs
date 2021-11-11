@@ -14,6 +14,6 @@ namespace AShop_Models.ViewModels
 
         public ApplicationUser ApplicationUser { get; set; }
 
-        public List<Product> ProductList { get; set; }
+        public IList<Product> ProductList { get; set; }
     }
 }

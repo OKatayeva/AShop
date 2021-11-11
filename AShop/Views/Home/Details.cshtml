@@ -2,9 +2,9 @@
 @using AShop_Utility
 
 @*<head>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/site.css" />
-</head>*@
+        <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+        <link rel="stylesheet" href="~/css/site.css" />
+    </head>*@
 
 <div class="container">
     <form method="post">
@@ -35,7 +35,20 @@
 
                                         <p class="text-secondary">@Html.Raw(Model.Product.Description)</p>
                                     </div>
-
+                                    <div class="col-12">
+                                        Quantity:
+                                    </div>
+                                    <div class="col-12">
+                                        @if (Model.ExistsInCart)
+                                        {
+                                            <input asp-for="@Model.Product.ProductQuantity" disabled class="form-control"/>
+                                        }
+                                        else
+                                        {
+                                            <input asp-for="@Model.Product.ProductQuantity" class="form-control" />
+                                        }
+                                        <span asp-validation-for="@Model.Product.ProductQuantity" class="text-danger"></span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -63,3 +76,6 @@
         </div>
     </form>
 </div>
+@section Scripts{
+    <partial name="_ValidationScriptsPartial" />
+}
