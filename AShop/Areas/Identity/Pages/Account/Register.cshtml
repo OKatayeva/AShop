@@ -2,6 +2,7 @@
 @model RegisterModel
 @using AShop_Utility
 <div class="container">
+    <br />
     @if (User.IsInRole(WC.AdminRole))
     {
         <h1>Register New Admin Account</h1>
@@ -48,20 +49,20 @@
                     <button type="submit" class="btn btn-warning">Register Admin User</button> }
                 else
                 {
-                    <button type="submit" class="btn btn-success">Register</button>            }
+                    <button type="submit" class="btn btn-success">Register</button>
+                    <br/>
+                    }
             </form>
             </div>
             <div class="col-md-6 col-md-offset-2">
                 <section>
-                    <h4>Use another service to register.</h4>
+                    
+                    <h4>Get ready for the best service!</h4>
                     <hr />
                     @{ if ((Model.ExternalLogins?.Count ?? 0) == 0)
                                     {
                         <div>
-                            <p>
-                                There are no external authentication services configured. See <a href="https://go.microsoft.com/fwlink/?LinkID=532715">this article</a>
-                                for details on setting up this ASP.NET application to support logging in via external services.
-                            </p>
+                                <img src="/images/content/create_account.png" class="img-fluid" alt="Guy sitting on the table nearby computer">
                         </div> }
                                     else
                                     {
@@ -70,7 +71,7 @@
                                 <p>
                                     @foreach (var provider in Model.ExternalLogins)
                                     {
-                    <button type="submit" class="btn btn-primary" name="provider" value="@provider.Name" title="Log in using your @provider.DisplayName account">@provider.DisplayName</button>}
+                                        <button type="submit" class="btn btn-primary" name="provider" value="@provider.Name" title="Log in using your @provider.DisplayName account">@provider.DisplayName</button>}
                                 </p>
                             </div>
                         </form> } }
