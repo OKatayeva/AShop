@@ -23,6 +23,7 @@ namespace AShop_Utility
         public const string CategoryName = "Category";
 
         public const string ApplicationTypeName = "ApplicationType";
+        public const string Brand = "Brand";
 
         public const string Success = "Success";
 

@@ -20,7 +20,7 @@ namespace AShop_Models
         [Range(1, int.MaxValue)]
         public double Price { get; set; }
 
-        //[NotMapped]
+        [NotMapped]
         [Range(1, 1000, ErrorMessage = "Quantity must be greater than 0.")]
         public int ProductQuantity { get; set; }
 
@@ -35,6 +35,12 @@ namespace AShop_Models
         public int ApplicationTypeId { get; set; }
         [ForeignKey("ApplicationTypeId")]
         public virtual ApplicationType ApplicationType { get; set; }
+
+        [Display(Name = "Brand")]
+        public int BrandId { get; set; }
+        [ForeignKey("BrandId")]
+        public virtual Brand Brand { get; set; }
+
 
     }
 }

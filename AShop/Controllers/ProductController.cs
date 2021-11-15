@@ -32,7 +32,7 @@ namespace AShop.Controllers
         public IActionResult Index()
         {
             //Eager loading (faster loading from database)
-            IEnumerable<Product> objList = _prodRepo.GetAll(includeProperties:"Category,ApplicationType");
+            IEnumerable<Product> objList = _prodRepo.GetAll(includeProperties:"Category,ApplicationType,Brand");
 
             //Another way of loading data - slower
             //1.Load products
@@ -61,7 +61,9 @@ namespace AShop.Controllers
             {
                 Product = new Product(),
                 CategorySelectList = _prodRepo.GetAllDropDownList(WC.CategoryName),
-                ApplicationTypeSelectList = _prodRepo.GetAllDropDownList(WC.ApplicationTypeName)
+                ApplicationTypeSelectList = _prodRepo.GetAllDropDownList(WC.ApplicationTypeName),
+                BrandSelectList = _prodRepo.GetAllDropDownList(WC.Brand)
+
             };
 
 
@@ -140,6 +142,7 @@ namespace AShop.Controllers
             }
             productVM.CategorySelectList = _prodRepo.GetAllDropDownList(WC.CategoryName);
             productVM.ApplicationTypeSelectList = _prodRepo.GetAllDropDownList(WC.ApplicationTypeName);
+            productVM.BrandSelectList = _prodRepo.GetAllDropDownList(WC.Brand);
             //productVM.ApplicationTypeSelectList = _context.ApplicationType.Select(i => new SelectListItem
             //{
             //    Text = i.Name,
@@ -158,7 +161,7 @@ namespace AShop.Controllers
             {
                 return NotFound();
             }
-            Product product = _prodRepo.FirstOrDefault(u => u.Id==id, includeProperties:"Category,ApplicationType");
+            Product product = _prodRepo.FirstOrDefault(u => u.Id==id, includeProperties:"Category,ApplicationType,Brand");
             //product.Category = _context.Category.Find(product.CategoryId);
             if (product == null)
             {

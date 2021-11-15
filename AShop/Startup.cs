@@ -53,6 +53,7 @@ namespace AShop
             services.AddScoped<IApplicationUserRepository, ApplicationUserRepository>();
             services.AddScoped<IOrderHeaderRepository, OrderHeaderRepository>();
             services.AddScoped<IOrderDetailRepository, OrderDetailRepository>();
+            services.AddScoped<IBrandRepository, BrandRepository>();
             services.AddControllersWithViews();
         }
 

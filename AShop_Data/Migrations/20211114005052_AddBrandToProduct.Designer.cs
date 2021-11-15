@@ -4,14 +4,16 @@ using AShop_Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace AShop_Data.Migrations
 {
     [DbContext(typeof(AshopDB))]
-    partial class AshopDBModelSnapshot : ModelSnapshot
+    [Migration("20211114005052_AddBrandToProduct")]
+    partial class AddBrandToProduct
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -225,6 +227,9 @@ namespace AShop_Data.Migrations
                     b.Property<int>("ApplicationTypeId")
                         .HasColumnType("int");
 
+                    b.Property<int>("BrandId")
+                        .HasColumnType("int");
+
                     b.Property<int>("CategoryId")
                         .HasColumnType("int");
 
@@ -247,6 +252,8 @@ namespace AShop_Data.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("ApplicationTypeId");
+
+                    b.HasIndex("BrandId");
 
                     b.HasIndex("CategoryId");
 
@@ -530,6 +537,12 @@ namespace AShop_Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("AShop_Models.Brand", "Brand")
+                        .WithMany()
+                        .HasForeignKey("BrandId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("AShop_Models.Category", "Category")
                         .WithMany()
                         .HasForeignKey("CategoryId")
@@ -537,6 +550,8 @@ namespace AShop_Data.Migrations
                         .IsRequired();
 
                     b.Navigation("ApplicationType");
+
+                    b.Navigation("Brand");
 
                     b.Navigation("Category");
                 });

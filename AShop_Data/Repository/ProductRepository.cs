@@ -35,6 +35,14 @@ namespace AShop_Data.Repository
                     Value = i.Id.ToString()
                 });
             }
+            if (obj == WC.Brand)
+            {
+                return _context.Brand.Select(i => new SelectListItem
+                {
+                    Text = i.BrandName,
+                    Value = i.Id.ToString()
+                });
+            }
             return null;
            
         }
