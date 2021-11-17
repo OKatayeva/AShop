@@ -136,8 +136,9 @@ namespace AShop.Controllers
                     }
                     _prodRepo.Update(productVM.Product);
                 }
-                _prodRepo.Save();
+                
                 TempData[WC.Success] = "Action completed!";
+                _prodRepo.Save();
                 return RedirectToAction("Index");
             }
             productVM.CategorySelectList = _prodRepo.GetAllDropDownList(WC.CategoryName);
@@ -154,7 +155,7 @@ namespace AShop.Controllers
         }
 
 
-        // GET: Category/Delete
+        // GET: Product/Delete
         public IActionResult Delete(int? id)
         {
             if (id == null || id == 0)
@@ -172,7 +173,7 @@ namespace AShop.Controllers
             return View(product);
         }
 
-        // POST: Category/Delete
+        // POST: Product/Delete
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public IActionResult DeletePost(int? id)

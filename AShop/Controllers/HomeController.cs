@@ -26,17 +26,26 @@ namespace AShop.Controllers
             _catRepo = catRepo;
         }
 
-        public IActionResult Index()
+        public IActionResult Index(string searchProduct=null)
         {
             HomeVM homeVM = new HomeVM()
             {
+                
                 Products = _prodRepo.GetAll(includeProperties:"Category,ApplicationType"),
                 Categories = _catRepo.GetAll()
             };
+
+            if (!string.IsNullOrEmpty(searchProduct))
+            {
+                homeVM.Products = homeVM.Products.Where(u => u.Name.ToLower().Contains(searchProduct.ToLower()) 
+                                                        //u.Brand.BrandName.ToLower().Contains(searchProduct.ToLower()) ||
+                                                        //u.Category.Name.ToLower().Contains(searchProduct.ToLower())
+                );
+                
+            }
             return View(homeVM);
         }
 
-        //Get Details
         public IActionResult Details(int id)
         {
             List<ShoppingCart> shoppingCartList = new List<ShoppingCart>();
@@ -106,5 +115,6 @@ namespace AShop.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+        
     }
 }

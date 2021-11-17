@@ -5,12 +5,14 @@ using AShop_Data.Repository.IRepository;
 using AShop_Models;
 using AShop_Utility;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 
 namespace AShop_Data.Repository
 {
     public class ProductRepository : Repository<Product>, IProductRepository
     {
         private readonly AshopDB _context;
+
         public ProductRepository(AshopDB context): base(context)
         {
             _context = context;
@@ -46,6 +48,7 @@ namespace AShop_Data.Repository
             return null;
            
         }
+
 
         public void Update(Product obj)
         {

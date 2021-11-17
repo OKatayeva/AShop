@@ -7,6 +7,10 @@ namespace AShop_Models
 {
     public class Product
     {
+        public Product()
+        {
+            ProductQuantity = 1;
+        }
         [Key]
         public int Id { get; set; }
 
