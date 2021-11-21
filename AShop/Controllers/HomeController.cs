@@ -31,7 +31,7 @@ namespace AShop.Controllers
             HomeVM homeVM = new HomeVM()
             {
                 
-                Products = _prodRepo.GetAll(includeProperties:"Category,ApplicationType"),
+                Products = _prodRepo.GetAll(includeProperties:"Category,ApplicationType,Brand"),
                 Categories = _catRepo.GetAll()
             };
 
@@ -57,7 +57,7 @@ namespace AShop.Controllers
 
             DetailsVM DetailsVM = new DetailsVM()
             {
-                Product = _prodRepo.FirstOrDefault(u => u.Id == id, includeProperties:"Category,ApplicationType"),
+                Product = _prodRepo.FirstOrDefault(u => u.Id == id, includeProperties: "Category,ApplicationType,Brand"),
                 ExistsInCart = false
             };
 
@@ -83,6 +83,7 @@ namespace AShop.Controllers
             }
             shoppingCartList.Add(new ShoppingCart { ProductId = id, ProdQuantity = detailsVM.Product.ProductQuantity});
             HttpContext.Session.Set(WC.SessionCart, shoppingCartList);
+            TempData[WC.Success] = "Item was added to cart successfully";
             return RedirectToAction(nameof(Index));
         }
 
@@ -102,6 +103,7 @@ namespace AShop.Controllers
             }
 
             HttpContext.Session.Set(WC.SessionCart, shoppingCartList);
+            TempData[WC.Success] = "Item was removed from cart successfully";
             return RedirectToAction(nameof(Index));
         }
 

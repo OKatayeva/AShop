@@ -19,14 +19,14 @@
                         </div>
                         <div class="card-body">
                             <div class=" d-none d-lg-block">
-                                <div class="row" style="color:#821f3d">
+                                <div class="row" style="color: #28a745">
                                     <div class="col-lg-2">
                                     </div>
                                     <div class="col-12 col-lg-7">
-                                        Product Details
+                                        Details
                                     </div>
                                     <div class="col-12 col-lg-2">
-                                        Price
+                                        Total price
                                     </div>
                                     <div class="col-6 col-sm-4 col-lg-1">
                                     </div>
@@ -44,27 +44,17 @@
                                     <div class="col-4 col-md-2 text-center py-2">
                                         <img src="@WC.ImagePath@Model[i].Image" class="rounded" width="100%" />
                                     </div>
-                                    @if (User.IsInRole(WC.AdminRole))
-                                    {
-
-                                        <div class="col-8 col-lg-3">
-                                            <h5>@Model[i].Name</h5>
-                                            <div style="font-size:11px;">@Model[i].ShortDescription</div>
-                                        </div>
-                                    }
-                                    else
-                                    {
-                                        <div class="col-8 col-lg-7">
-                                            <h5>@Model[i].Name</h5>
-                                            <div style="font-size:11px;">@Model[i].ShortDescription</div>
-                                        </div>
-                                    }
+                            
+                                    <div class="col-8 col-lg-3">
+                                        <h5>@Model[i].Name</h5>
+                                        <div style="font-size:11px;">@Model[i].ShortDescription</div>
+                                    </div>
+                                   
                                     <div class="col-3 col-lg-2 pt-lg-4" style="font-size:11px;">
                                         <span style="font-size:17px;"> @Model[i].Price EUR</span>
 
                                     </div>
-                                    @if (User.IsInRole(WC.AdminRole))
-                                    {
+                                    
                                         <div class="col-4 col-lg-2 pt-lg-4" style="font-size:11px;">
                                             <input type="number" asp-for="@Model[i].ProductQuantity" class="form-control" />
                                             <span asp-validation-for="@Model[i].ProductQuantity" class="text-danger"></span>
@@ -74,7 +64,7 @@
 
 
                                         </div>
-                                    }
+                                    
                                     <div class="col-2 col-lg-1 p-0 pt-lg-4 text-center">
                                         <a asp-action="Remove" asp-route-id="@Model[i].Id" class="btn btn-outline-danger">
                                             <i class="fas fa-trash"></i>

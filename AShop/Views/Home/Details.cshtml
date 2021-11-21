@@ -1,25 +1,21 @@
 ﻿@model AShop_Models.ViewModels.DetailsVM
 @using AShop_Utility
 
-@*<head>
-        <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-        <link rel="stylesheet" href="~/css/site.css" />
-    </head>*@
 
 <div class="container">
     <form method="post">
         <input asp-for="@Model.Product.Id" hidden />
-        <div class="container backgroundWhite pt-4">
+        <div class="card mb-4 shadow-sm">
             <div class="card">
-                <div class="card-header bg-dark text-light ml-0 row container" style="border-radius: 0px;">
-                    <div class="col-12 col-md-6">
-                        <h1 class="text-white">@Model.Product.Name</h1>
-                    </div>
-                    <div class="col-12 col-md-6 text-md-right">
-                        <h1 class="text-white">@Model.Product.Price EUR</h1>
-                    </div>
+                
+                <div class="card-header">
+                    <small class="my-0 font-weight-normal" style="color:#28a745;">@Model.Product.Brand.BrandName</small>
+                    <h4 class="my-0 font-weight-normal">@Model.Product.Name</h4>
+
                 </div>
                 <div class="card-body">
+                    <h1 class="card-title pricing-card-title">@Model.Product.Price <small class="text-muted">EUR</small></h1>
+                    
                     <div class="container rounded p-2">
                         <div class="row">
                             <div class="col-12 col-lg-4 p-1 text-center">
@@ -41,7 +37,7 @@
                                     <div class="col-12">
                                         @if (Model.ExistsInCart)
                                         {
-                                            <input asp-for="@Model.Product.ProductQuantity" disabled class="form-control"/>
+                                            <input asp-for="@Model.Product.ProductQuantity" disabled class="form-control" />
                                         }
                                         else
                                         {

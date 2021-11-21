@@ -5,9 +5,9 @@
 <div class="col-lg-4 col-md-6 pb-4 filter @Model.Category.Name.Replace(' ','-')">
         <div class="card mb-4 shadow-sm">
             <div class="card-header">
+                <small class="my-0 font-weight-normal" style="color:#28a745;">@Model.Brand.BrandName</small>
                 <h4 class="my-0 font-weight-normal">@Model.Name</h4>
-                @*<div class="col-7"><label class="float-left">@Model.Name</label></div>
-                <div class="col-5"><label class="float-right"><span class="text-info h5">@Model.Price</span> EUR </label> </div>*@
+               
             </div>
             <div class="card-body">
                 <h1 class="card-title pricing-card-title">@Model.Price <small class="text-muted">EUR</small></h1>

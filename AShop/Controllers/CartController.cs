@@ -183,8 +183,7 @@ namespace AShop.Controllers
                 _orderDetailRepo.Add(orderDetail);
             }
             _orderDetailRepo.Save();
-            TempData[WC.Success] = "Action completed!";
-            return RedirectToAction(nameof(InquiryConfirmation), new { id = orderHeader.Id });
+            
             var pathToTemplate = _webHostEnvironment.WebRootPath + Path.DirectorySeparatorChar.ToString()
                 + "templates" + Path.DirectorySeparatorChar.ToString() +
                 "inquiry.html";
@@ -229,8 +228,10 @@ namespace AShop.Controllers
                 _inqDetailsRepo.Add(inquiryDetails);
             }
             _inqDetailsRepo.Save();
+            TempData[WC.Success] = "Action is complete!";
+            //return RedirectToAction(nameof(InquiryConfirmation));
             TempData[WC.Success] = "Action completed!";
-            return RedirectToAction(nameof(InquiryConfirmation));
+            return RedirectToAction(nameof(InquiryConfirmation), new { id = orderHeader.Id });
         }
 
      
