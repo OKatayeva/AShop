@@ -34,7 +34,7 @@ namespace AShop_Utility
         public const string StatusInProcess = "Processing";
         public const string StatusShipped = "Shipped";
         public const string StatusCancelled = "Cancelled";
-        //public const string StatusRefunded = "Refunded";
+        
 
         public static readonly IEnumerable<string> listStatus = new ReadOnlyCollection<string>(
             new List<string>

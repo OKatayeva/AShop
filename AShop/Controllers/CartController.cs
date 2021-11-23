@@ -26,9 +26,6 @@ namespace AShop.Controllers
         private readonly IWebHostEnvironment _webHostEnvironment;
         private readonly IEmailSender _emailSender;
         private readonly IApplicationUserRepository _userRepo;
-        private readonly IInquiryHeaderRepository _inqHeaderRepo;
-        private readonly IInquiryDetailsRepository _inqDetailsRepo;
-
         private readonly IOrderHeaderRepository _orderHeaderRepo;
         private readonly IOrderDetailRepository _orderDetailRepo;
         private readonly IProductRepository _prodRepo;
@@ -36,8 +33,7 @@ namespace AShop.Controllers
         public ProductUserViewModel ProductUserViewModel { get; set; }
 
         public CartController(IWebHostEnvironment webHostEnvironment, IEmailSender emailSender,
-            IApplicationUserRepository userRepo, IInquiryHeaderRepository inqHeaderRepo,
-            IInquiryDetailsRepository inqDetailsRepo, IProductRepository prodRepo,
+            IApplicationUserRepository userRepo,IProductRepository prodRepo,
             IOrderHeaderRepository orderHeaderRepo,
             IOrderDetailRepository orderDetailRepo)
         {
@@ -45,9 +41,6 @@ namespace AShop.Controllers
             _webHostEnvironment = webHostEnvironment;
             _emailSender = emailSender;
             _userRepo = userRepo;
-            _inqHeaderRepo = inqHeaderRepo;
-            _inqDetailsRepo = inqDetailsRepo;
-
             _orderHeaderRepo = orderHeaderRepo;
             _orderDetailRepo = orderDetailRepo;
             _prodRepo = prodRepo;
@@ -186,8 +179,8 @@ namespace AShop.Controllers
             
             var pathToTemplate = _webHostEnvironment.WebRootPath + Path.DirectorySeparatorChar.ToString()
                 + "templates" + Path.DirectorySeparatorChar.ToString() +
-                "inquiry.html";
-            var subject = "New inquiry";
+                "order.html";
+            var subject = "Your order received";
             var htmlBody = "";
             using (StreamReader stream = System.IO.File.OpenText(pathToTemplate))
             {
@@ -206,37 +199,37 @@ namespace AShop.Controllers
                 ProductUserViewModel.ApplicationUser.PhoneNumber,
                 productList.ToString());
             await _emailSender.SendEmailAsync(WC.EmailAdmin, subject, messageBody);
-            InquiryHeader inquiryHeader = new InquiryHeader()
-            {
-                ApplicationUserId = claim.Value,
-                FullName = ProductUserViewModel.ApplicationUser.FullName,
-                PhoneNumber = ProductUserViewModel.ApplicationUser.PhoneNumber,
-                Email = ProductUserViewModel.ApplicationUser.Email,
-                InquiryDate = DateTime.Now
-            };
+            //InquiryHeader inquiryHeader = new InquiryHeader()
+            //{
+            //    ApplicationUserId = claim.Value,
+            //    FullName = ProductUserViewModel.ApplicationUser.FullName,
+            //    PhoneNumber = ProductUserViewModel.ApplicationUser.PhoneNumber,
+            //    Email = ProductUserViewModel.ApplicationUser.Email,
+            //    InquiryDate = DateTime.Now
+            //};
 
-            _inqHeaderRepo.Add(inquiryHeader);
-            _inqHeaderRepo.Save();
+            //_inqHeaderRepo.Add(inquiryHeader);
+            //_inqHeaderRepo.Save();
 
-            foreach (var product in ProductUserViewModel.ProductList)
-            {
-                InquiryDetails inquiryDetails = new InquiryDetails()
-                {
-                    InquiryHeaderId = inquiryHeader.Id,
-                    ProductId = product.Id
-                };
-                _inqDetailsRepo.Add(inquiryDetails);
-            }
-            _inqDetailsRepo.Save();
+            //foreach (var product in ProductUserViewModel.ProductList)
+            //{
+            //    InquiryDetails inquiryDetails = new InquiryDetails()
+            //    {
+            //        InquiryHeaderId = inquiryHeader.Id,
+            //        ProductId = product.Id
+            //    };
+            //    _inqDetailsRepo.Add(inquiryDetails);
+            //}
+            //_inqDetailsRepo.Save();
             TempData[WC.Success] = "Action is complete!";
             //return RedirectToAction(nameof(InquiryConfirmation));
             TempData[WC.Success] = "Action completed!";
-            return RedirectToAction(nameof(InquiryConfirmation), new { id = orderHeader.Id });
+            return RedirectToAction(nameof(OrderConfirmation), new { id = orderHeader.Id });
         }
 
      
 
-        public IActionResult InquiryConfirmation(ProductUserViewModel productUserViewModel)
+        public IActionResult OrderConfirmation(ProductUserViewModel productUserViewModel)
         {
 
             HttpContext.Session.Clear();

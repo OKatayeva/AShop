@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AShop_Data.Migrations
 {
     [DbContext(typeof(AshopDB))]
-    [Migration("20211116221304_UpdateProductTable")]
-    partial class UpdateProductTable
+    [Migration("20211123000837_DropInquiryDetailsAndHeaderTables")]
+    partial class DropInquiryDetailsAndHeaderTables
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -70,60 +70,6 @@ namespace AShop_Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Category");
-                });
-
-            modelBuilder.Entity("AShop_Models.InquiryDetails", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("InquiryHeaderId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ProductId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("InquiryHeaderId");
-
-                    b.HasIndex("ProductId");
-
-                    b.ToTable("InquiryDetails");
-                });
-
-            modelBuilder.Entity("AShop_Models.InquiryHeader", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("ApplicationUserId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("FullName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("InquiryDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("PhoneNumber")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ApplicationUserId");
-
-                    b.ToTable("InquiryHeader");
                 });
 
             modelBuilder.Entity("AShop_Models.OrderDetail", b =>
@@ -471,34 +417,6 @@ namespace AShop_Data.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasDiscriminator().HasValue("ApplicationUser");
-                });
-
-            modelBuilder.Entity("AShop_Models.InquiryDetails", b =>
-                {
-                    b.HasOne("AShop_Models.InquiryHeader", "InquiryHeader")
-                        .WithMany()
-                        .HasForeignKey("InquiryHeaderId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("AShop_Models.Product", "Product")
-                        .WithMany()
-                        .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("InquiryHeader");
-
-                    b.Navigation("Product");
-                });
-
-            modelBuilder.Entity("AShop_Models.InquiryHeader", b =>
-                {
-                    b.HasOne("AShop_Models.ApplicationUser", "ApplicationUser")
-                        .WithMany()
-                        .HasForeignKey("ApplicationUserId");
-
-                    b.Navigation("ApplicationUser");
                 });
 
             modelBuilder.Entity("AShop_Models.OrderDetail", b =>

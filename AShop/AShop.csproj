@@ -32,8 +32,6 @@
     <None Remove="Microsoft.AspNetCore.Identity.UI" />
     <None Remove="Views\Cart\" />
     <None Remove="Mailjet.Api" />
-    <None Remove="Views\Inquiry\" />
-    <!--<None Remove="NMP.Core" />-->
     <None Remove="Views\Order\" />
     <None Remove="Syncfusion.EJ2.AspNet.Core" />
     <None Remove="Views\ApplicationType %28copy%29\" />
@@ -44,7 +42,6 @@
     <Folder Include="wwwroot\images\" />
     <Folder Include="wwwroot\images\product\" />
     <Folder Include="Views\Cart\" />
-    <Folder Include="Views\Inquiry\" />
     <Folder Include="Views\Order\" />
     <Folder Include="Views\ApplicationType %28copy%29\" />
   </ItemGroup>
