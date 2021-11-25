@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AShop_Data;
+using AShop_Data.Initializer;
 using AShop_Data.Repository;
 using AShop_Data.Repository.IRepository;
 using AShop_Utility;
@@ -52,11 +53,13 @@ namespace AShop
             services.AddScoped<IOrderHeaderRepository, OrderHeaderRepository>();
             services.AddScoped<IOrderDetailRepository, OrderDetailRepository>();
             services.AddScoped<IBrandRepository, BrandRepository>();
+            services.AddScoped<IDbInitializer, DbInitializer>();
+
             services.AddControllersWithViews();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IDbInitializer dbInitializer)
         {
             if (env.IsDevelopment())
             {
@@ -74,7 +77,7 @@ namespace AShop
             app.UseRouting();
             app.UseAuthentication();
             app.UseAuthorization();
-
+            dbInitializer.Initialize();
             app.UseSession();
 
             app.UseEndpoints(endpoints =>
