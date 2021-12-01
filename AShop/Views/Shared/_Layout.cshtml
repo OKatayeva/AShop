@@ -23,14 +23,17 @@
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow">
             <div class="container">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index" style="color: #009E60; font-family: verdana ">AShop</a>
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
+                    <img src="~/images/favicon-32x32.png" width="80%" />
+                </a>
+                @*<a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index" style="color: #009E60; font-family: verdana ">AShop</a>*@
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 @*<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>*@
+            <span class="navbar-toggler-icon"></span>
+        </button>*@
                 <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
                     <partial name="_LoginPartial" />
                     <ul class="navbar-nav flex-grow-1">
@@ -40,16 +43,7 @@
                         @if (User.IsInRole(WC.AdminRole))
                         {
                             <li class="nav-item dropdown">
-                                @*<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                        Content Management
-                                    </a>
-                                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                        <li><a class="dropdown-item" asp-area="" asp-controller="Category" asp-action="Index">Category</a></li>
-                                        <li><a class="dropdown-item" asp-area="" asp-controller="ApplicationType" asp-action="Index">Application Type</a></li>
-                                        <li><a class="dropdown-item" asp-area="" asp-controller="Product" asp-action="Index">Product</a></li>
-                                        <li class="dropdown-divider"></li>
-                                        <li><a class="dropdown-item" asp-area="Identity" asp-page="/Account/Register">Create Admin User</a></li>
-                                    </ul>*@
+
                                 <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
                                     Content Management
                                 </a>
@@ -89,8 +83,9 @@
             </div>
         </nav>
     </header>
-    <br/>
+    
     @RenderSection("carousel", required: false)
+    <br />
     @*<div class="container-fluid" style="padding:unset;">*@
     <div class="container">
         <main role="main" class="pb-3" style="margin:unset;">
@@ -116,7 +111,7 @@
 
 
     @await RenderSectionAsync("Scripts", required: false)
-    
+
     <ejs-scripts></ejs-scripts>
 </body>
 </html>

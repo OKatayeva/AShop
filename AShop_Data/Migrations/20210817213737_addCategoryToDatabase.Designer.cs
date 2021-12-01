@@ -20,20 +20,20 @@ namespace AShop_Data.Migrations
                 .HasAnnotation("ProductVersion", "5.0.9")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("AShop_Models.ApplicationType", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+            //modelBuilder.Entity("AShop_Models.ApplicationType", b =>
+            //    {
+            //        b.Property<int>("Id")
+            //            .ValueGeneratedOnAdd()
+            //            .HasColumnType("int")
+            //            .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
+            //        b.Property<string>("Name")
+            //            .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("Id");
+            //        b.HasKey("Id");
 
-                    b.ToTable("ApplicationType");
-                });
+            //        b.ToTable("ApplicationType");
+            //    });
 
             modelBuilder.Entity("AShop_Models.Category", b =>
                 {

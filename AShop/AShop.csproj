@@ -17,7 +17,6 @@
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="5.0.9" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="5.0.9" />
     <PackageReference Include="Mailjet.Api" Version="1.2.2" />
-    <!--<PackageReference Include="NMP.Core" Version="3.0.7" />-->
     <PackageReference Include="Syncfusion.EJ2.AspNet.Core" Version="19.3.0.47" />
   </ItemGroup>
 
@@ -34,7 +33,6 @@
     <None Remove="Mailjet.Api" />
     <None Remove="Views\Order\" />
     <None Remove="Syncfusion.EJ2.AspNet.Core" />
-    <None Remove="Views\ApplicationType %28copy%29\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\ApplicationType\" />
@@ -43,7 +41,6 @@
     <Folder Include="wwwroot\images\product\" />
     <Folder Include="Views\Cart\" />
     <Folder Include="Views\Order\" />
-    <Folder Include="Views\ApplicationType %28copy%29\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Remove="Migrations\20210815110116_addCategoryToDatabase.cs" />

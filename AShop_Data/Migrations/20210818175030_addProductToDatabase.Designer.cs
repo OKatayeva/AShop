@@ -20,40 +20,40 @@ namespace AShop_Data.Migrations
                 .HasAnnotation("ProductVersion", "5.0.9")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("AShop_Models.ApplicationType", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+            //modelBuilder.Entity("AShop_Models.ApplicationType", b =>
+            //    {
+            //        b.Property<int>("Id")
+            //            .ValueGeneratedOnAdd()
+            //            .HasColumnType("int")
+            //            .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+            //        b.Property<string>("Name")
+            //            .IsRequired()
+            //            .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("Id");
+            //        b.HasKey("Id");
 
-                    b.ToTable("ApplicationType");
-                });
+            //        b.ToTable("ApplicationType");
+            //    });
 
-            modelBuilder.Entity("AShop_Models.Category", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+            //modelBuilder.Entity("AShop_Models.Category", b =>
+            //    {
+            //        b.Property<int>("Id")
+            //            .ValueGeneratedOnAdd()
+            //            .HasColumnType("int")
+            //            .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("DisplayOrder")
-                        .HasColumnType("int");
+            //        b.Property<int>("DisplayOrder")
+            //            .HasColumnType("int");
 
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+            //        b.Property<string>("Name")
+            //            .IsRequired()
+            //            .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("Id");
+            //        b.HasKey("Id");
 
-                    b.ToTable("Category");
-                });
+            //        b.ToTable("Category");
+            //    });
 
             modelBuilder.Entity("AShop_Models.Product", b =>
                 {

@@ -32,4 +32,8 @@
     <ProjectReference Include="..\AShop_Models\AShop_Models.csproj" />
     <ProjectReference Include="..\AShop_Utility\AShop_Utility.csproj" />
   </ItemGroup>
+  <ItemGroup>
+    <Compile Remove="Temp_junk\20210817213737_addCategoryToDatabase.cs" />
+    <Compile Remove="Temp_junk\20210817213737_addCategoryToDatabase.Designer.cs" />
+  </ItemGroup>
 </Project>

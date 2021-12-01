@@ -35,23 +35,23 @@ namespace AShop_Data.Migrations
                     b.ToTable("ApplicationType");
                 });
 
-            modelBuilder.Entity("AShop_Models.Category", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+            //modelBuilder.Entity("AShop_Models.Category", b =>
+            //    {
+            //        b.Property<int>("Id")
+            //            .ValueGeneratedOnAdd()
+            //            .HasColumnType("int")
+            //            .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("DisplayOrder")
-                        .HasColumnType("int");
+            //        b.Property<int>("DisplayOrder")
+            //            .HasColumnType("int");
 
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
+            //        b.Property<string>("Name")
+            //            .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("Id");
+            //        b.HasKey("Id");
 
-                    b.ToTable("Category");
-                });
+            //        b.ToTable("Category");
+            //    });
 #pragma warning restore 612, 618
         }
     }
