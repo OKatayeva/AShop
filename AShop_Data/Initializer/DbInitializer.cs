@@ -52,7 +52,7 @@ namespace AShop_Data.Initializer
                 Email = "admin@admin.com",
                 EmailConfirmed = true,
                 FullName = "Administrator",
-                PhoneNumber = "1234567"
+                PhoneNumber = "111111111111"
             }, "Admin123!").GetAwaiter().GetResult();
 
             ApplicationUser user = _context.ApplicationUser.FirstOrDefault(u => u.Email == "admin@admin.com");
