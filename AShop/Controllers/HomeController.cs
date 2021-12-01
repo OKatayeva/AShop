@@ -117,6 +117,27 @@ namespace AShop.Controllers
             return View();
         }
 
+        public IActionResult Products(string searchProduct = null)
+        {
+            HomeVM homeVM = new HomeVM()
+            {
+
+                Products = _prodRepo.GetAll(includeProperties: "Category,ApplicationType,Brand"),
+                Categories = _catRepo.GetAll()
+            };
+
+            if (!string.IsNullOrEmpty(searchProduct))
+            {
+                homeVM.Products = homeVM.Products.Where(u => u.Name.ToLower().Contains(searchProduct.ToLower())
+                //u.Brand.BrandName.ToLower().Contains(searchProduct.ToLower()) ||
+                //u.Category.Name.ToLower().Contains(searchProduct.ToLower())
+                );
+
+            }
+            return View(homeVM);
+        }
+
+
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
