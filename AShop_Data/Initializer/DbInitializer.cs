@@ -32,7 +32,7 @@ namespace AShop_Data.Initializer
             }
             catch (Exception ex)
             {
-
+                
             }
 
 
