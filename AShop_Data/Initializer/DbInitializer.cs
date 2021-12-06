@@ -2,6 +2,7 @@
 using System.Linq;
 using AShop_Models;
 using AShop_Utility;
+using Mailjet.Client.Resources;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -30,9 +31,9 @@ namespace AShop_Data.Initializer
                     _context.Database.Migrate();
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                
+                throw;
             }
 
 
